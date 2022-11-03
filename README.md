@@ -68,6 +68,49 @@ Connection string: postgres://postgres:XfBn9F9x4gfqrVF@autumn-cherry-7687.intern
 ## Useful Docs
 
 - Flask setup https://flask.palletsprojects.com/en/2.2.x/installation/
-- This repo is based on https://fly.io/docs/languages-and-frameworks/python/
-  - The only difference is I changed hellofly.py -> app.py and made necessary changes after that
 - https://fly.io/docs/postgres/the-basics/connecting/
+
+---
+
+## **FAQ**
+
+## I want to change the schema of one of my tables. Can I?
+If you try to add/delete columns from a table (i.e. change the class variables of one of your database models) after the table has been created, your database usually won’t update to reflect your changes. This is because the `db.create_all()` call in SQLAlchemy first checks if each table exists, and then creates any tables that don’t. If you change the schema, it won’t realize that it needs to add columns to your table the next time it runs.
+
+Your best bet is to delete your table and start over. To do that, connect to your table as in the demo above. In the prompt, enter `\d` to see a list of your tables. Then, enter `DROP TABLE “<table>”;`, where `<table>` is your table name.
+
+(Postgresql strings are case-sensitive if double quotes are used, and case-insensitive otherwise)
+
+## How should I get started?
+Everyone will have a slightly different way of fitting together the different concepts in this app, so there’s no single solution to this question. But to get you started, here’s a rough list of the tasks that need to be done:
+Add a form to your main page where users can enter ratings and comments.
+Add a database to your app where comments and ratings can be stored. 
+Add a page where users can sign up for and log in to the app.
+Once you’ve figured out the login logic, change your main page logic so that it displays all comments associated with the current movie.
+
+This project shouldn’t be a huge number of lines of code, but it’s tricky to get started because you have to take distinct concepts -- forms, databases, login -- and fit them all together. It’s completely normal and even expected to be unsure of how to start, and this is actually a common situation in software engineering.
+
+One way to get out of analysis paralysis is to **just build something**. Take whatever part of the app makes sense to you, whether it’s adding a DB, adding a login page, or whatnot, and build that, and see what happens. More often than not, you’ll see the next step you have to take (“I built this form, so now I need some server logic to receive the data”; “I added a database, so now I need to figure out what data I want to store in it”) once you force yourself to start moving. 
+
+## What’s this UserMixin thing in the Flask-Login docs? How do I use it?
+Flask-Login will keep track of an object representing the current user of your app. [This section of the docs](https://flask-login.readthedocs.io/en/latest/#your-user-class) describes how Flask expects that object to look. In particular, Flask wants you to create a user class and then pass an instance of it to `login_user()` when you want to log that user in. 
+
+Flask-Login provides a UserMixin class that will implement most of those requirements up front. So when you define your user class, you can do this to inherit all those attributes:
+
+```
+class AppPerson(UserMixin):
+```
+
+Note that this is not the same class you're using as one of your database models, if you're keeping a table of users, e.g.
+  
+```
+class DBPerson(db.Model):
+```
+  
+You'll have to figure out how to translate an `AppPerson` into a `DBPerson` and vice versa.
+
+## How do we access whoever is logged in within python?
+```
+from flask_login import current_user
+```
+`current_user` from the `flask-login` library will let you access the user variable within the python file. Note that this will return EXACTLY the object you passed to `login_user()`, whenever you called that function.
