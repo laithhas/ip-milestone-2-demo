@@ -1,10 +1,3 @@
-## Useful Docs
-
-- Flask setup https://flask.palletsprojects.com/en/2.2.x/installation/
-- This repo is based on https://fly.io/docs/languages-and-frameworks/python/
-  - The only difference is I changed hellofly.py -> app.py and made necessary changes after that
-- https://fly.io/docs/postgres/the-basics/connecting/
-
 ## Initial Setup
 
 - `fly launch` to create new app and **select yes for creating with postgres db**
@@ -66,3 +59,10 @@ Connection string: postgres://postgres:XfBn9F9x4gfqrVF@autumn-cherry-7687.intern
 
 - `fly deploy`
 - `fly open`
+
+## Useful Docs
+
+- Flask setup https://flask.palletsprojects.com/en/2.2.x/installation/
+- This repo is based on https://fly.io/docs/languages-and-frameworks/python/
+  - The only difference is I changed hellofly.py -> app.py and made necessary changes after that
+- https://fly.io/docs/postgres/the-basics/connecting/
