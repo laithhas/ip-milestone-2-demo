@@ -1,6 +1,11 @@
 ## Initial Setup
 
+- Clone this repo
+- We will write the `app.py` file together
+
+## After the in-class demo
 - `fly launch` to create new app and **select yes for creating with postgres db**
+  - **Add payment method if necessary, just make sure you don't exceed 3 VMs at once**
   - Make sure to choose the `dev` instance of the DB
   - Something like this will be printed to your console. **SAVE IT** for later.
 
